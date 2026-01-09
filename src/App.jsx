@@ -51,6 +51,7 @@ const ManageAppointmentsPage = lazy(() => import('./pages/admin/ManageAppointmen
 const ManageContactsPage = lazy(() => import('./pages/admin/ManageContactsPage'));
 const ManageSuccessCasesPage = lazy(() => import('./pages/admin/ManageSuccessCasesPage'));
 const ManageTestimonialsPage = lazy(() => import('./pages/admin/ManageTestimonialsPage'));
+const LiveChatPage = lazy(() => import('./pages/admin/LiveChatPage'));
 
 // Error Pages
 const NotFoundPage = lazy(() => import('./pages/errors/NotFoundPage'));
@@ -114,6 +115,7 @@ function App() {
             <Route path="/admin/contactos" element={<ManageContactsPage />} />
             <Route path="/admin/casos-exito" element={<ManageSuccessCasesPage />} />
             <Route path="/admin/testimonios" element={<ManageTestimonialsPage />} />
+            <Route path="/admin/chat" element={<LiveChatPage />} />
           </Route>
         </Route>
 

@@ -14,7 +14,8 @@ import {
   HiX,
   HiExternalLink,
   HiStar,
-  HiChat
+  HiChat,
+  HiChatAlt2
 } from 'react-icons/hi';
 import { useState } from 'react';
 import { clsx } from 'clsx';
@@ -31,6 +32,7 @@ const sidebarLinks = [
   { to: '/admin/casos', icon: HiBriefcase, label: 'Casos Clientes' },
   { to: '/admin/citas', icon: HiCalendar, label: 'Citas' },
   { to: '/admin/contactos', icon: HiMail, label: 'Contactos' },
+  { to: '/admin/chat', icon: HiChatAlt2, label: 'Chat en Vivo' },
 ];
 
 const AdminLayout = () => {

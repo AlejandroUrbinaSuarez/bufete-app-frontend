@@ -7,6 +7,8 @@ import { ToastContainer } from 'react-toastify';
 
 import App from './App';
 import { AuthProvider } from './context/AuthContext';
+import { ChatProvider } from './context/ChatContext';
+import ChatWidget from './components/chat/ChatWidget';
 
 import './styles/globals.css';
 import 'react-toastify/dist/ReactToastify.css';
@@ -28,19 +30,22 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <QueryClientProvider client={queryClient}>
         <BrowserRouter>
           <AuthProvider>
-            <App />
-            <ToastContainer
-              position="top-right"
-              autoClose={5000}
-              hideProgressBar={false}
-              newestOnTop
-              closeOnClick
-              rtl={false}
-              pauseOnFocusLoss
-              draggable
-              pauseOnHover
-              theme="light"
-            />
+            <ChatProvider>
+              <App />
+              <ChatWidget />
+              <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+              />
+            </ChatProvider>
           </AuthProvider>
         </BrowserRouter>
       </QueryClientProvider>
