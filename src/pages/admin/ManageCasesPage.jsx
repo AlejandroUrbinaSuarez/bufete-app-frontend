@@ -96,7 +96,8 @@ const ManageCasesPage = () => {
         servicesApi.getAll(),
       ]);
 
-      setCases(casesRes.data || []);
+      // El backend devuelve {cases: [...], pagination: {...}}
+      setCases(casesRes.data?.cases || casesRes.data || []);
 
       // Separate clients and lawyers from users
       const users = usersRes.data || [];
