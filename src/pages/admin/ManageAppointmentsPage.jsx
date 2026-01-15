@@ -78,7 +78,7 @@ export default function ManageAppointmentsPage() {
 
   const loadLawyers = async () => {
     try {
-      const res = await lawyersApi.getAll();
+      const res = await lawyersApi.getAllAdmin();
       setLawyers(res.data.lawyers || res.data);
     } catch (error) {
       console.error('Error cargando abogados:', error);
