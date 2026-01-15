@@ -430,26 +430,32 @@ const ManageLawyersPage = () => {
 
               <div>
                 <label className="label">Áreas de Práctica</label>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-2 mt-2">
-                  {services.map(service => (
-                    <label
-                      key={service.id}
-                      className={`flex items-center gap-2 p-2 rounded-lg cursor-pointer border transition-colors ${
-                        formData.service_ids.includes(service.id)
-                          ? 'border-primary-500 bg-primary-50'
-                          : 'border-gray-200 hover:border-gray-300'
-                      }`}
-                    >
-                      <input
-                        type="checkbox"
-                        checked={formData.service_ids.includes(service.id)}
-                        onChange={() => handleServiceToggle(service.id)}
-                        className="w-4 h-4 text-primary-600 rounded focus:ring-primary-500"
-                      />
-                      <span className="text-sm">{service.name}</span>
-                    </label>
-                  ))}
-                </div>
+                {services.length === 0 ? (
+                  <p className="text-sm text-gray-500 mt-2">
+                    No hay servicios disponibles. Cree servicios primero para asociarlos.
+                  </p>
+                ) : (
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-2 mt-2">
+                    {services.map(service => (
+                      <label
+                        key={service.id}
+                        className={`flex items-center gap-2 p-2 rounded-lg cursor-pointer border transition-colors ${
+                          formData.service_ids.includes(service.id)
+                            ? 'border-primary-500 bg-primary-50'
+                            : 'border-gray-200 hover:border-gray-300'
+                        }`}
+                      >
+                        <input
+                          type="checkbox"
+                          checked={formData.service_ids.includes(service.id)}
+                          onChange={() => handleServiceToggle(service.id)}
+                          className="w-4 h-4 text-primary-600 rounded focus:ring-primary-500"
+                        />
+                        <span className="text-sm">{service.name}</span>
+                      </label>
+                    ))}
+                  </div>
+                )}
               </div>
 
               <div className="grid grid-cols-2 gap-4">
