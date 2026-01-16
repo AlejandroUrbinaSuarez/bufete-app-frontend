@@ -1,11 +1,26 @@
 import { Link } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
 import { HiPhone, HiMail, HiLocationMarker } from 'react-icons/hi';
 import { FaFacebookF, FaLinkedinIn, FaTwitter, FaInstagram } from 'react-icons/fa';
+import { settingsApi } from '../../api/settings';
 
 const SITE_NAME = import.meta.env.VITE_SITE_NAME || 'Pedro Perez y Asociados';
 
+// Obtener iniciales de las primeras dos palabras significativas (>2 caracteres)
+const getInitials = (name) => {
+  const words = name.split(' ').filter(w => w.length > 2);
+  return words.slice(0, 2).map(w => w[0].toUpperCase()).join('');
+};
+
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const initials = getInitials(SITE_NAME);
+
+  const { data: settings } = useQuery({
+    queryKey: ['settings', 'public'],
+    queryFn: () => settingsApi.getPublic().then(res => res.data),
+    staleTime: 1000 * 60 * 30, // 30 minutos
+  });
 
   return (
     <footer className="bg-primary-900 text-white">
@@ -16,7 +31,7 @@ const Footer = () => {
           <div>
             <Link to="/" className="flex items-center gap-2 mb-4">
               <div className="w-10 h-10 bg-gold-500 rounded-lg flex items-center justify-center">
-                <span className="text-white font-heading font-bold text-xl">PP</span>
+                <span className="text-white font-heading font-bold text-xl">{initials}</span>
               </div>
               <span className="font-heading font-semibold text-white text-lg">
                 {SITE_NAME}
@@ -138,21 +153,26 @@ const Footer = () => {
             <ul className="space-y-4">
               <li className="flex items-start gap-3">
                 <HiLocationMarker className="w-5 h-5 text-gold-500 flex-shrink-0 mt-0.5" />
-                <span className="text-gray-300 text-sm">
-                  Calle Principal 123, Piso 5<br />
-                  Ciudad, País 12345
+                <span className="text-gray-300 text-sm whitespace-pre-line">
+                  {settings?.site_address || 'Calle Principal 123, Ciudad'}
                 </span>
               </li>
               <li className="flex items-center gap-3">
                 <HiPhone className="w-5 h-5 text-gold-500 flex-shrink-0" />
-                <a href="tel:+1234567890" className="text-gray-300 hover:text-gold-500 text-sm">
-                  +1 234 567 890
+                <a
+                  href={`tel:${(settings?.site_phone || '+1234567890').replace(/\s/g, '')}`}
+                  className="text-gray-300 hover:text-gold-500 text-sm"
+                >
+                  {settings?.site_phone || '+1 234 567 890'}
                 </a>
               </li>
               <li className="flex items-center gap-3">
                 <HiMail className="w-5 h-5 text-gold-500 flex-shrink-0" />
-                <a href="mailto:contacto@ejemplo.com" className="text-gray-300 hover:text-gold-500 text-sm">
-                  contacto@ejemplo.com
+                <a
+                  href={`mailto:${settings?.site_email || 'contacto@ejemplo.com'}`}
+                  className="text-gray-300 hover:text-gold-500 text-sm"
+                >
+                  {settings?.site_email || 'contacto@ejemplo.com'}
                 </a>
               </li>
             </ul>
@@ -160,8 +180,8 @@ const Footer = () => {
             {/* Horario */}
             <div className="mt-6 p-4 bg-white/5 rounded-lg">
               <p className="text-sm font-medium mb-2">Horario de Atención</p>
-              <p className="text-gray-300 text-sm">Lunes a Viernes: 9:00 - 18:00</p>
-              <p className="text-gray-300 text-sm">Sábado: 9:00 - 13:00</p>
+              <p className="text-gray-300 text-sm">{settings?.site_schedule || 'Lunes a Viernes: 9:00 - 18:00'}</p>
+              <p className="text-gray-300 text-sm">{settings?.site_schedule_weekend || 'Sábado: 9:00 - 13:00'}</p>
             </div>
           </div>
         </div>
